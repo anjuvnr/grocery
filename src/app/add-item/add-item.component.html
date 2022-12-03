@@ -1,0 +1,13 @@
+<form [formGroup]="addItemField">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Add products" id="item" formControlName="newItem" required />
+    <div class="input-group-btn">
+      <button class="btn btn-primary" type="button" (click)="onAddItem()" [disabled]="!addItemField.get('newItem').valid">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </div>
+  </div>
+  <span *ngIf="!addItemField.get('newItem').valid && addItemField.get('newItem').touched" class="help-block">
+        Empty or duplicate product not allowed
+      </span>
+</form>

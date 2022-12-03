@@ -1,24 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <form [formGroup]="addItemField">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Add products" id="item" formControlName="newItem" required />
-        <div class="input-group-btn">
-          <button class="btn btn-primary" type="button" (click)="onAdd()" [disabled]="!addItemField.get('newItem').valid">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-        </div>
-      </div>
-        <span *ngIf="!addItemField.get('newItem').valid && addItemField.get('newItem').touched" class="help-block">
-        Empty or duplicate product not allowed
-      </span>
-      </form>
+      <app-add-item [loadedGrocerItems]="loadedGrocerItems" (addItemEvent)="onAdd($event)"></app-add-item>
       <p *ngIf="loadedGrocerItems.length < 1 && !isFetching">No items available!</p>
       <ul class="list-group" *ngIf="loadedGrocerItems.length >= 1 && !isFetching">
-        <li class="list-group-item" *ngFor="let post of loadedGrocerItems">
-          <h3>{{ post.name }}<a (click)="onDelete(post.grocery_id)"><span class="glyphicon glyphicon-trash pull-right"></span></a></h3>
-        </li>
+        <app-display-item *ngFor="let groceryItem of loadedGrocerItems" [groceryItem]="groceryItem" (deleteItemEvent)="onDelete($event)"></app-display-item>
       </ul>
       <p *ngIf="isFetching && !error">Loading...</p>
       <div class="alert alert-danger" *ngIf="error">
